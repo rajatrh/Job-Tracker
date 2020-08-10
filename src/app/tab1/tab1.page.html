@@ -1,17 +1,60 @@
-<ion-header [translucent]="true">
+<ion-header slot="fixed">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Job Tracker
+
     </ion-title>
+    <ion-button slot="end" (click)="loadGmailApi()">
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-button>
+
   </ion-toolbar>
+  <ion-button *ngIf="showSignIn" expand="block" (click)="process_signin()">
+    <ion-icon slot="end" name="logo-google"></ion-icon>
+    Link your university email
+  </ion-button>
+
 </ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list *ngIf="loading">
+    <ion-list-header>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let x of [1,2,3,4]">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-list *ngIf="!loading">
+    <ion-item *ngFor="let res of applicationDataService.applications">
+      <ion-avatar slot="start">
+        <ion-badge color="secondary" style="padding-top: 8px;">{{res.fromDomain}}</ion-badge>
+      </ion-avatar>
+      <ion-label>
+        <h2></h2>
+        <p>{{res.snippet}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="30px">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

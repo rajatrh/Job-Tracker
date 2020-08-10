@@ -7,6 +7,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -14,6 +15,9 @@
     "lib": [
       "es2018",
       "dom"
+    ],
+    "types": [
+      "gapi", 
     ]
   },
   "angularCompilerOptions": {
