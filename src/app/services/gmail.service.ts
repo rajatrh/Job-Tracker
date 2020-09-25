@@ -54,14 +54,16 @@ export class GmailService {
         snippet: email['result']['snippet']
       }
   
-      processedEmail['fromDomain'] = processedEmail.from.split('@')[1].split('.')[0]
-      console.log(processedEmail)
+      processedEmail['fromDomain'] = processedEmail.from.split('@')[1].replace('>', '');
+      let domainNames = processedEmail['fromDomain'].split('.');
+      domainNames.pop();
+      processedEmail['companyName'] = domainNames.join('.')
+
       this.applicationDataService.applications.push(processedEmail)
     } catch(x) {
       return
     }
   }
-
 
   getValueFromHeader(headers, key) {
     console.log(headers)

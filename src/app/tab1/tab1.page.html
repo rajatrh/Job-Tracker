@@ -1,60 +1,43 @@
-<ion-header slot="fixed">
-  <ion-toolbar>
-    <ion-title>
+
+<ion-header slot="fixed" style="background-color: teal;">
+
+ 
+    <ion-title style="padding: 20px">
       Job Tracker
-
     </ion-title>
-    <ion-button slot="end" (click)="loadGmailApi()">
-      <ion-icon name="refresh-outline"></ion-icon>
-    </ion-button>
 
-  </ion-toolbar>
-  <ion-button *ngIf="showSignIn" expand="block" (click)="process_signin()">
-    <ion-icon slot="end" name="logo-google"></ion-icon>
-    Link your university email
-  </ion-button>
+
+  <ion-segment value="freq">
+    <ion-segment-button value="week">
+      <ion-label style="color: white;">Over Week</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="month">
+      <ion-label style="color: white;">Over Month</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="year">
+      <ion-label style="color: white;">Over Year</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <x-chartist [type]="type" [data]="data" [options]="options" [events]="events"></x-chartist>
 
 </ion-header>
-<ion-content>
+<ion-content> 
 
-  <ion-list *ngIf="loading">
-    <ion-list-header>
-      <ion-label>
-        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-      </ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let x of [1,2,3,4]">
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
+  <ion-list>
+    <ion-item *ngFor="let res of [1,2,3,4,5,6,7]" style="border-width: 0px;">
+      <ion-card style="width: 100%;">
+        <ion-item>
+          <ion-avatar style="width: 20px; height: 20px; margin-right: 10px;">
+            <img src="//logo.clearbit.com/apple.com">
+          </ion-avatar>
+          <ion-label>Apple</ion-label>
+          <ion-label slot="end" style="text-align: right; font-size: smaller; color: gray;">3w</ion-label>
+        </ion-item>
+      
+        <ion-card-content>
+          Full Stack developer 
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
-
-  <ion-list *ngIf="!loading">
-    <ion-item *ngFor="let res of applicationDataService.applications">
-      <ion-avatar slot="start">
-        <ion-badge color="secondary" style="padding-top: 8px;">{{res.fromDomain}}</ion-badge>
-      </ion-avatar>
-      <ion-label>
-        <h2></h2>
-        <p>{{res.snippet}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="30px">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
